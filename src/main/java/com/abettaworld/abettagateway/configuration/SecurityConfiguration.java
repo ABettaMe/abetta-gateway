@@ -19,7 +19,9 @@ public class SecurityConfiguration {
                 .pathMatchers("/get").permitAll()
                 .pathMatchers("/login", "/abetta-xp/**", "/something").authenticated()
                 .and()
-                .oauth2Login();
+                .oauth2ResourceServer()
+                .jwt();
+//                .jwkSetUri("https://accounts.google.com/.well-known/openid-configuration");
         return serverHttpSecurity.build();
     }
 
