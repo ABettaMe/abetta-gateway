@@ -23,6 +23,16 @@ public class RouteConfiguration {
                         .filters(f -> f.addRequestHeader("Hello", "World"))
                         .uri("http://httpbin.org:80"))
                 .route(p -> p
+                        .path("/login/oauth2/code/google")
+                        .uri("http://localhost:3000"))
+                .route(p -> p
+                        .path("/#")
+                        .uri("http://localhost:3000"))
+                .route(p -> p
+                        .path("/")
+                        .uri("http://localhost:3000"))
+//                        .filters(f -> f.redirect(HttpStatus.PERMANENT_REDIRECT.toString(), "http://localhost:3000")))
+                .route(p -> p
                         .path("/abetta-xp/**")
                         .filters(gatewayFilterSpec -> gatewayFilterSpec.filters((exchange, chain) -> {
                             return exchange.getPrincipal()
@@ -41,7 +51,7 @@ public class RouteConfiguration {
                                     })
                                     .flatMap(chain::filter);
                         }))
-                        .uri(uriConfiguration.getExperimentServiceUrl()))
+                        .uri(uriConfiguration.getUrl()))
                 .route(p -> p
                         .path("/something")
                         .uri("forward:/test-controller"))
