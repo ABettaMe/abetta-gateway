@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Getter
 @Configuration
-@ConfigurationProperties(prefix = "com.abettaworld.services.experiment")
-public class UriConfiguration {
+@ConfigurationProperties(prefix = "com.abettame.urls")
+public class UrlConfiguration {
 
-    private String url;
+    private String experimentServiceUrl;
+
+    private String clientPortalUrl;
 }
