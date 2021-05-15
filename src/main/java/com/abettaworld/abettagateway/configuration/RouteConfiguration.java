@@ -25,12 +25,12 @@ public class RouteConfiguration {
                 .route(p -> p
                         .path("/login/oauth2/code/google")
                         .uri("http://localhost:3000"))
-                .route(p -> p
-                        .path("/#")
-                        .uri("http://localhost:3000"))
-                .route(p -> p
-                        .path("/")
-                        .uri("http://localhost:3000"))
+//                .route(p -> p
+//                        .path("/#")
+//                        .uri("http://localhost:3000"))
+//                .route(p -> p
+//                        .path("/")
+//                        .uri("http://localhost:3000"))
 //                        .filters(f -> f.redirect(HttpStatus.PERMANENT_REDIRECT.toString(), "http://localhost:3000")))
                 .route(p -> p
                         .path("/abetta-xp/**")
@@ -47,13 +47,17 @@ public class RouteConfiguration {
                                                 .header("userLastName", (String) attributes.get("family_name"))
                                                 .header("userPictureUrl", (String) attributes.get("picture"))
                                                 .build();
+                                        exchange.getResponse().getHeaders().add("Access-Control-Allow-Origin", "http://localhost:3000");
+                                        exchange.getResponse().getHeaders().add("Access-Control-Allow-Credentials", "true");
                                         return exchange;
                                     })
                                     .flatMap(chain::filter);
                         }))
-                        .uri(uriConfiguration.getUrl()))
+                        .uri("forward:/test-controller"))
+//                        .uri(uriConfiguration.getUrl()))
                 .route(p -> p
                         .path("/something")
+                        .filters(f -> f.addRequestHeader("Access-Control-Allow-Origin", "*"))
                         .uri("forward:/test-controller"))
                 .build();
     }
